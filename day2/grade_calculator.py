@@ -44,7 +44,6 @@ def main():
         print("------------------------------")
         print(f"{'Name':<7}: {name}")
         print(f"{'Average':<7}: {average:.1f}")
-        print(f"{'Grade':<7}: {grade}")
 
 if __name__ == "__main__":
     main()
