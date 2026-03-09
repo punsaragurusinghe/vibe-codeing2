@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner – suggested by Nimal</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f7fa;
+            --accent-color: #ff6b6b;
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-dark);
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        main {
+            width: 90%;
+            max-width: 600px;
+            background: var(--text-light);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-add {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .btn-add:hover {
+            background-color: #357abd;
+        }
+
+        .btn-reset {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        .btn-reset:hover {
+            background-color: #e65b5b;
+        }
+
+        .stats {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            background: #fdfdfd;
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: var(--radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 5px;
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            padding: 1.5rem;
+            text-align: center;
+            background-color: #333;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">📚 PlanMyStudy</div>
+        <h1>Study Planner</h1>
+        <p>Suggested by Nimal</p>
+    </header>
+
+    <main>
+        <div class="stats">
+            <span>Total Ideas: <span id="total-count">0</span></span>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="idea-input" placeholder="Enter your study idea...">
+            <div class="button-group">
+                <button class="btn-add" onclick="addIdea()">Add Idea</button>
+                <button class="btn-reset" onclick="resetInput()">Reset</button>
+            </div>
+        </div>
+
+        <ul id="idea-list">
+            <!-- Ideas will be added here -->
+        </ul>
+    </main>
+
+    <footer>
+        &copy; 2026 Study Planner App. Built with AI for Nimal.
+    </footer>
+
+    <script>
+        const ideaInput = document.getElementById('idea-input');
+        const ideaList = document.getElementById('idea-list');
+        const totalCount = document.getElementById('total-count');
+
+        let ideas = [];
+
+        function updateList() {
+            ideaList.innerHTML = '';
+            ideas.forEach((idea, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${idea}</span>
+                    <button class="delete-btn" onclick="deleteIdea(${index})">&times;</button>
+                `;
+                ideaList.appendChild(li);
+            });
+            totalCount.textContent = ideas.length;
+        }
+
+        function addIdea() {
+            const ideaText = ideaInput.value.trim();
+            if (ideaText !== "") {
+                ideas.push(ideaText);
+                ideaInput.value = "";
+                updateList();
+            } else {
+                alert("Please enter a valid idea!");
+            }
+        }
+
+        function deleteIdea(index) {
+            ideas.splice(index, 1);
+            updateList();
+        }
+
+        function resetInput() {
+            ideaInput.value = "";
+            ideaInput.focus();
+        }
+
+        // Allow 'Enter' key to add idea
+        ideaInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addIdea();
+            }
+        });
+
+    </script>
+</body>
+</html>

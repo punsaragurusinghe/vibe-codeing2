@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEON DRIVE | Retro Racer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background-grid"></div>
+
+<header>
+    <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">NEON<span>DRIVE</span></span>
+    </div>
+    <div class="header-stats">
+        <div class="stat-group">
+            <div class="stat-item">
+                <span class="label">BEST</span>
+                <span class="value" id="high-score-display">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="label">RUNS</span>
+                <span class="value" id="total-runs-display">0</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="game-container">
+    <div id="score-display">0</div>
+    
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="overlay">
+        <div class="glitch-wrapper">
+            <h1 class="glitch" data-text="NEON DRIVE">NEON DRIVE</h1>
+        </div>
+        <p>Master the neon highways in this high-speed avoidance challenge.</p>
+        
+        <div class="feature-header">
+            <span>Essential Tips</span>
+            <span class="count-badge" id="tips-count">4</span>
+        </div>
+        <ul class="feature-list">
+            <li><span>🚀</span> Dodge high-speed traffic</li>
+            <li><span>⚡</span> Tap screen to switch lanes</li>
+            <li><span>🏆</span> Beat your high score</li>
+            <li><span>🔥</span> Speed increases over time</li>
+        </ul>
+
+        <button onclick="startGame()">Engage Drive</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="overlay hidden">
+        <div class="crash-text">SYSTEM FAILURE</div>
+        <h2>CRASHED!</h2>
+        <div class="final-score-container">
+            <div class="final-score-label">Distance Reached</div>
+            <div class="final-score" id="final-score">0</div>
+        </div>
+        <button onclick="startGame()">Reboot Drive</button>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-info">
+            <p>&copy; 2026 SynthWave Labs • v1.2.0</p>
+        </div>
+        <div class="footer-actions">
+            <button class="btn-text" onclick="resetData()">Reset Data</button>
+            <a href="#" class="link">Controls</a>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
